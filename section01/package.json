@@ -1,0 +1,22 @@
+{
+  "name": "section01",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kimyoda/onebite_TypeScript.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kimyoda/onebite_TypeScript/issues"
+  },
+  "homepage": "https://github.com/kimyoda/onebite_TypeScript#readme",
+  "dependencies": {
+    "@types/node": "^20.12.12"
+  }
+}
