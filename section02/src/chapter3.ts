@@ -17,7 +17,7 @@ let config: {
   apikey: "NY API KET",
 };
 
-config.apikey = "hacked";
+// config.apikey = "hacked";
 
 // user = {
 //   name: "김좌진",
