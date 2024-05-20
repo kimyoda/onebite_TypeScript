@@ -69,6 +69,7 @@ let book2: Book = {
 // 이런 경우 허용
 let book3: Book = programmingBook;
 
+// 객체 리터럴을 할당할 때 초과 프로퍼티가 있으면 오류를 발생시킨다.
 function func(book: Book) {
   func({
     name: "한 입 크기로 잘라먹는 리액트",
@@ -76,4 +77,6 @@ function func(book: Book) {
     // skill: "reactjs",
   });
 }
+
+// 변수로 선언된 객체를 할당할 때는 초과 프로퍼티 검사 적용 X
 func(programmingBook);
