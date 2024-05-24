@@ -1,5 +1,4 @@
 // 타입 단언(Type assertion)
-
 type Person = {
   name: string;
   age: number;
