@@ -1,12 +1,15 @@
-🎯 미션 안내
-Day5 미션 안내드리겠습니다.
+# 🎯 Day 5 미션 안내
 
 오늘의 미션은 바로 바로 코딩 Quiz입니다!
-딱 2개의 퀴즈만 푸시면 되구 무척이나 쉽습니다!
+딱 3개의 퀴즈만 푸시면 되구 무척이나 쉽습니다!
 
-<details> <summary>Quiz 1. 아래 코드의 변수 a, b, c, d, e의 타입은 각각 어떻게 추론될까요?</summary>
+### Quiz 1. 타입 단언을 이용해 빈 객체 할당하기
 
-💡 요구사항:
+💡 **요구사항:**
+타입 단언을 이용해 `person` 변수에 빈 객체를 할당하세요. (힌트: 초과 프로퍼티 검사 방지를 위한 타입 단언)
+
+<details>
+<summary>🏆 정답 코드 확인하기 (클릭)</summary>
 
 ```ts
 /*
@@ -23,17 +26,17 @@ type Person = {
 let person: Person = {} as Person;
 ```
 
-<details> <summary>정답 코드 확인</summary>
+</details>
 
-<details> <summary>Quiz 2. 타입 단언을 이용해 함수 호출에서의 오류를 해결하세요
-</summary>
+---
 
-💡 요구사항:
-타입 단언을 이용해 함수 호출에서의 오류를 해결하세요
-(힌트. const 단언)
+### Quiz 2. const 단언을 이용해 함수 호출 오류 해결하기
 
-<details> <summary>정답 코드 확인</summary>
-요구사항을 만족하는 타입스크립트 코드는 다음과 같습니다.
+💡 **요구사항:**
+타입 단언을 이용해 함수 호출에서의 오류를 해결하세요. (힌트: const 단언)
+
+<details>
+<summary>🏆 정답 코드 확인하기 (클릭)</summary>
 
 ```ts
 /*
@@ -52,13 +55,17 @@ function giveMe10(value: 10) {
 }
 ```
 
-</details> </details>
+</details>
 
-<details> <summary>Quiz 3. 다음 요구사항을 만족하는 코드를 작성하세요</summary>
+---
 
-💡 요구사항:
+### Quiz 3. 서로소 유니온 타입 정의하기
 
-- CompanyMember 타입을 Boss와 Employee의 서로소 유니온 타입으로 정의하세요
+💡 **요구사항:**
+`CompanyMember` 타입을 `Boss`와 `Employee`의 서로소 유니온 타입으로 정의하세요.
+
+<details>
+<summary>🏆 정답 코드 확인하기 (클릭)</summary>
 
 ```ts
 /*
@@ -92,4 +99,4 @@ function test(companyMember: CompanyMember) {
 }
 ```
 
-</details> </details>
+</details>
