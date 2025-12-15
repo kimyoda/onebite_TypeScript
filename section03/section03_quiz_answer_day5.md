@@ -1,19 +1,17 @@
 🎯 미션 안내
-Day5 미션 안내드리겠습니다.
+Day6 미션 안내드리겠습니다.
 
-오늘의 미션은 바로 바로 코딩 Quiz입니다!
-딱 2개의 퀴즈만 푸시면 되구 무척이나 쉽습니다!
+오늘의 미션도 바로 바로 코딩 Quiz입니다!
+오늘은 총 3개의 퀴즈가 준비되어 있습니다!
 
-<details> <summary>Quiz 1. 아래 코드의 변수 a, b, c, d, e의 타입은 각각 어떻게 추론될까요?</summary>
+<details> <summary>Quiz 1. </summary>
 
 💡 요구사항:
 
+- 타입 단언을 이용해 person 변수에 빈 객체를 할당하세요. (힌트. 초과 프로퍼티 검사 방지를 위한 타입 단언)
+
 ```ts
-let a = 10;
-const b = 20;
-const c = [1, 2];
-const d = [1, "hello", true];
-const e = [1, 2, 3] as const;
+
 ```
 
 <details> <summary>정답 코드 확인</summary>
