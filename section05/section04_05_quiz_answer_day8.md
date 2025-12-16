@@ -118,33 +118,56 @@ function inviteUser(user: User) {
 ```ts
 /*
 [ 문제 소개 ]
-함수 타입 표현식을 이용해 다음 요구사항을 만족하는 타입 Func를 정의하세요
-- 2개의 매개변수 a와 b를 받습니다.
-- 매개변수 a는 Number, b는 String 타입입니다.
-- 반환값 타입은 boolean 입니다.
+다음 조건을 만족하는 3가지 인터페이스를 추가로 구현하세요
+- 모든 인터페이스는 Person 인터페이스를 확장합니다(extends).
+  1. Student 인터페이스는 grade 프로퍼티를 갖습니다. 
+    - grade 프로퍼티에는 "A", "B", "C"만 저장할 수 있습니다.
+  2. Developer 인터페이스는 skills 프로퍼티를 갖습니다.
+    - skills 프로퍼티에는 문자열 배열을 저장할 수 있습니다.
+  3. Boss 인터페이스는 company 프로퍼티를 갖습니다.
+    - company 프로퍼티에는 문자열을 저장할 수 있습니다.
 */
 
-/* [Quiz] 아래의 코드를 완성해 오류를 제거하세요 */
-// 1. 함수 타입 표현식으로 a, b에 각각 타입을 설정하고 리턴값을 요구 사항에 맞게 boolean 시그니처를 정의한다.
-type Func = (a: number, b: string) => boolean;
-// 2. 호출 시그니처 방식
-// type Func = {
-//   (a: number, b: string): boolean;
-// };
+/* [Quiz] 사용자 정의 타입가드를 완성하세요(타입 수정 X) */
+interface Person {
+  name: string;
+}
+
+// Person 인터페이스를 상속받아 name 프로퍼티 포함, grade에 유니온타입("A", "B", "C" 추가)을 추가했다.
+interface Student extends Person {
+  grade: "A" | "B" | "C";
+}
+
+// Person 인터페이스를 상속받아 name 프로퍼티 포함, skills 에 "문자열 배열 타입"을 추가했다.
+interface Developer extends Person {
+  skills: string[];
+}
+
+// Person 인터페이스를 상속받아 name 프로퍼티 포함, company에 "문자열 타입"을 추가했다.
+interface Boss extends Person {
+  company: string;
+}
 
 /* [Test] 여기부터는 정답을 체크하기 위한 용도로 수정하지 않습니다 */
-const func: Func = (a, b) => {
-  console.log(a.toFixed());
-  console.log(b.toLocaleLowerCase());
-  return true;
-};
-
 import { Equal, Expect, NotAny } from "@type-challenges/utils";
 
+const student: Student = {
+  name: "이정환",
+  grade: "A",
+};
+const developer: Developer = {
+  name: "이정환",
+  skills: ["React", "TypeScript"],
+};
+const boss: Boss = {
+  name: "이정환",
+  company: "한입 스튜디오",
+};
+
 type TestCases = [
-  Expect<NotAny<Func>>,
-  Expect<Equal<Parameters<Func>[0], number>>,
-  Expect<Equal<Parameters<Func>[1], string>>
+  Expect<Equal<Student["grade"], "A" | "B" | "C">>,
+  Expect<Equal<Developer["skills"], string[]>>,
+  Expect<Equal<Boss["company"], string>>
 ];
 ```
 
