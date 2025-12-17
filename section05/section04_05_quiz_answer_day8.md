@@ -63,26 +63,24 @@ function add(a?: number, b?: number, c?: number) {
 /* [Quiz] 사용자 정의 타입가드를 완성하세요(타입 수정 X) */
 type Guest = {
   visitCount: number;
-  isVisitor: boolean;
 };
 
 type Member = {
   id: string;
-  isSubscribed: boolean;
 };
 
 type User = Guest | Member;
 
-// 사용자 정의 타입 가드: true면 user를 Guest로 좁혀준다.
-// Guest에만 있는 구분 필드(isVisitor)의 존재 여부로 Guest인지 판별한다.
+// 사용자 정의 타입 가드: 반환 타입을 'user is Guest'로 선언
+// true에서 user 타입을 Guest로 좁혀준다. Guest인지 판별한다
 function isGuest(user: User): user is Guest {
-  return (user as Guest).isVisitor !== undefined;
+  return (user as Guest).visitCount !== undefined;
 }
 
-// 사용자 정의 타입 가드: true면 user를 Member로 좁혀준다.
-// Member에만 있는 구분 필드(isSubscribed)의 존재 여부로 Member인지 판별한다
+// 사용자 정의 타입 가드: 반환 타입을 'user is Member'로 선언.
+// true면 user 타입을 Member로 좁혀주고 존재 여부로 Member인지 판별한다
 function isMember(user: User): user is Member {
-  return (user as Member).isSubscribed !== undefined;
+  return (user as Member).id !== undefined;
 }
 
 /* [Test] 여기부터는 정답을 체크하기 위한 용도로 수정하지 않습니다 */
