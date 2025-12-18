@@ -13,7 +13,12 @@
 - 객체 리터럴로 여러 개를 만들 때 생기는 코드 중복을 줄여준다.
 
 ```ts
+class Player {
+  constructor(public name: string) {}
+}
 
+const p1 = new Player("kim");
+const p2 = new Player("lee"); // 같은 구조의 객체를 쉽게 여러 개 생성
 ```
 
 ---
@@ -33,16 +38,34 @@
 **추가 설명**
 
 1. 캡슐화(Encapsulation)
-
+   - 데이터(상태)와 동작(메서드)를 하나로 묶고, 외부에 필요한 것만 노출하는 개념이다.
+   - 접근제어자('private/protected/public')로 숨김/노출을 조절하는 방법이다.
 2. 다형성(Polymorphism)
 
+- 같은 인터페이스/타입으로 다루나, 실제 동작은 객체에 따라 다르게 동작하는 성질이다.
+- 오버라이딩(재정의) + 인터페이스/상속 구조에서 자주 나타난다.
+
 3. 추상화(Abstraction)
+   - 복잡한 구현 디테일을 숨기고, 핵심 개념/필수 동작만 드러내는 설계다.
+   - 무엇을 할 수 있는가 중심으로 하는 관점이다.
 
 ```ts
+class Animal {
+  move() {
+    return "move";
+  }
+}
 
+class Dog extends Animal {
+  bark() {
+    return "bark";
+  }
+}
+
+const d = new Dog();
+d.move(); // 부모 기능 사용
+d.bark(); // 자식 기능 추가
 ```
-
-- 문법 설명
 
 ---
 
@@ -55,25 +78,19 @@
 
 **해설**
 
-- 인터페이스 확장은 다른 인터페이스의 속성을 물려받아 새로운 인터페이스를 정의할 수 있게 해준다.
-- 여러 관련 타입에서 공통된 속성을 반복해서 정의할 필요가 없다.
-
-**추가설명**
-
-- 공통 속성을 상위 인터페이스로 빼고, 하위 타입들이 일관된 형태를 가지게된다.
-- 도메인이 클수록 (User/Admin/Guest 등) 확장은 타입 중복 제거 + 유지보수성에 도움이 된다.
+- `private`는 오직 해당 클래스 자신 안에서만 접근이 허용된다. 인스턴스 외부나 자식 클래스에서도 접근할 수 없어 제한적이다.
 
 ```ts
-interface Entity {
-  id: string;
-  createdAt: Date;
+class Wallet {
+  private money = 100;
+
+  pay() {
+    return this.money - 10; // 클래스 내부에서는 접근 가능
+  }
 }
-interface Post extends Entity {
-  title: string;
-}
-interface Comment extends Entity {
-  content: string;
-}
+
+const w = new Wallet();
+// w.money; // ❌ 외부 접근 불가
 ```
 
 ---
@@ -87,15 +104,24 @@ interface Comment extends Entity {
 
 **해설**
 
-- 타입 별칭과 달리 인터페이스는 동일 이름으로 여러 번 선언해도 오류 없이 정의된 속성들이 모두 합쳐 하나의 타입처럼 동작한다.
-- 이 특징을 **선언 병합(Declaration Merging)**이라 한다.
+- 인터페이스는 특정 객체나 클래스가 어떤 속성과 메서드를 가져야 할 지 형태를 약속하는 계약과 같다.
+- `implements`키워드로 클래스가 약속을 지킨다.
 
 **추가설명**
 
-- 병합은 자동합치기고 의도치 않게 타입이 커질 위험도 있다.
+- 인터페이스는 구현이 아니라 규격을 정한다.
+- 클래스뿐 아니라 객체 리터럴에도 적용이 가능하다.
 
 ```ts
+interface Flyable {
+  fly(): string;
+}
 
+class Bird implements Flyable {
+  fly() {
+    return "flying";
+  }
+}
 ```
 
 ---
@@ -109,14 +135,22 @@ interface Comment extends Entity {
 
 **해설**
 
-- **선언 병합**은 이미 정의된 타입(라이브러리 타입)에 새로운 속성이나 메소드를 추가하여 타입 정의를 확장할 때 유용하게 사용된다
-- 이를 **모듈 보강(Module Augmentation)**라 한다.
+- 클래스는 객체 생성자일뿐 아니라, 타입으로 활용할 수 있다. 변수나 함수 인자의 타입을 명확히하여 안전성을 높여준다.
 
 **추가 설명**
 
-- 외부 라이브러리 타입 정의가 프로젝트 요구를 못담을 때 보강한다.
-- 전역 객체/환경 타입에 프로젝트 전용 속성 추가, 라이브러리 옵션 타입에 커스텀 필드를 추가하는 등.
+- 클래스는 런타임에서 생성도구, 타입 시스템에서 인스턴스 타입으로 쓰인다.
+- 이 함수는 특정 클래스 인스턴스만 받는다를 타입으로 강제할 수 있다.
 
 ```ts
-// 예시 형태(개념용): 기존 라이브러리 타입에 속성 추가
+class User {
+  constructor(public id: string) {}
+}
+
+function greet(u: User) {
+  return `${u.id}님 안녕하세요!`;
+}
+
+greet(new User("kim")); // ✅
+// greet({ id: "kim" }); // (상황에 따라) 클래스 인스턴스가 아니면 제한하고 싶을 때가 있음
 ```
