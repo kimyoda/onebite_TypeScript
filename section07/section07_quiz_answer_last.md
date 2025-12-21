@@ -14,10 +14,35 @@
 
 **추가 설명**
 
--
+- 핵심은 공통 리터럴 속성이다.
+
+  - 타입 단언(Type Assertion)
+
+    - 개발자가 값의 타입을 확신할 때, 컴파일러에 강제로 지정하는 문법이다.
+    - 컴파일러의 판단을 바꾸는 개념에 가깝다.
+
+  - 타입 좁히기
+
+    - 조건문, 검사 로직을 통해 더 구체적인 타입으로 범위를 줄이는 과정이다.
+    - `typeof`, `in`, `instanceof`, `리터럴 비교`, 사용자 정의 타입가드 등
+
+  - 오버로딩
+    - 하나의 함수에 대해 호출 가능한 형태(시그니쳐)를 여러 개 선언,
+    - 입력 형태에 따라 허용되는 호출 / 반환 타입을 명확하게 표현하는 기능이다.
 
 ```ts
+type Success = {type: "success"; data: string};
+type Fail = { type: "fail"; error: string};
+type Result = Success | Fail;
 
+function handle(r: Result) {
+  if (r.type === "success) {
+  // 여기서는 Success로 좁혀진다
+  return r.data.toUpperCase();
+  }
+  // 여기서는 Fail로 좁혀진다.
+  return r.error;
+}
 ```
 
 ---
@@ -39,11 +64,18 @@
 
 **추가 설명**
 
+- 함수 타입 호환은 호출자가 안전하가로 확인한다.
+- 반환 타입은 기대 타입에 들어갈 수 있어야 호환된다.
+
 ```ts
+type ExpectString = () => string;
+type ReturnOK = () => "OK";
 
+let a: ExpectString;
+let b: ReturnOK;
+
+a = b; // ✅ "OK"는 string에 할당 가능
 ```
-
-- 문법 설명
 
 ---
 
@@ -64,8 +96,37 @@
 
 **추가설명**
 
-```ts
+- `typeof`
 
+  - 값의 원시 타입을 검사하는 연산자다.
+  - 주로 `string`, `number`, `boolean`, `function` 같은 타입 판별에 사용된다.
+
+- `instanceof`
+
+  - 값이 특정 클래스(생성자 함수)의 인스턴스인지 검사하는 연산자다.
+  - 클래스 기반 객체 판별에 많이 쓰인다.
+
+- `is`
+
+  - 사용자 정의 타입 가드 함수의 반환 타입 위치에 쓰는 키워드다.
+
+- `as`
+  - 타입 단언 문법이다.
+  - 실제 런타임 검사를 수행하는 도구는 아니다.
+
+```ts
+type Cat = { kind: "cat"; meow(): void };
+type Dog = { kind: "dog"; bark(): void };
+type Pet = Cat | Dog;
+
+function isCat(p: Pet): p is Cat {
+  return p.kind === "cat";
+}
+
+function act(p: Pet) {
+  if (isCat(p)) p.meow();
+  else p.bark();
+}
 ```
 
 ---
@@ -86,8 +147,15 @@
 
 **추가설명**
 
-```ts
+- 인터페이스는 해당 객체는 필드/메서드를 가져야 한다는 형태(구조)계약서다.
+- 구현 방법은 안정하고, 겉모양만 정해 협업에 유리하다.
 
+```ts
+interface User {
+  id: number;
+  name: string;
+}
+const u: User = { id: 1, name: "yohan" };
 ```
 
 ---
@@ -109,6 +177,13 @@
 
 **추가 설명**
 
-```ts
+- 제네릭은 타입을 나중에 결정해서, 같은 로직을 여러 타입에 재사용하게 한다.
+- `any`처럼 포기하지 않고, 타입을 유지한 채 재사용한다는게 포인트다.
 
+```ts
+function wrap<T>(value: T) {
+  return { value };
+}
+wrap(1).value; // number
+wrap("hi").value; // string
 ```
