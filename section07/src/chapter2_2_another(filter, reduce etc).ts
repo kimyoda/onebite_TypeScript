@@ -1,5 +1,7 @@
 // 제네릭 filter 및 그 이외에 함수 추가
 
+import { it } from "node:test";
+
 // 1. filter 메서드
 const arrFilter = [1, 2, 3, 4];
 const resFilter = arrFilter.filter((number) => number > 2); // [3, 4]
@@ -18,6 +20,15 @@ function filter2<T, Func extends (arg: T) => boolean>(
 ): T[] {
   return arr.filter(func);
 }
+
+// 화살표 함수
+const filter1_3 = <T>(arr: T[], func: (arg: T) => boolean): T[] =>
+  arr.filter(func);
+
+const filter2_3 = <T, Func extends (arg: T) => boolean>(
+  arr: T[],
+  func: Func
+): T[] => arr.filter(func);
 
 // 실제 적용
 const nums = [1, 2, 3, 4];
@@ -52,6 +63,19 @@ function reduce2<T, Result, Func extends (acc: Result, cur: T) => Result>(
   return arr.reduce(func, init);
 }
 
+// 화살표 함수
+const reduce1_3 = <T, Result>(
+  arr: T[],
+  func: (acc: Result, cur: T) => Result,
+  init: Result
+): Result => arr.reduce(func, init);
+
+const reduce2_3 = <T, Result, Func extends (acc: Result, cur: T) => Result>(
+  arr: T[],
+  func: Func,
+  init: Result
+): Result => arr.reduce(func, init);
+
 // 실제 적용 예시
 // 숫자 배열을 하나로 합산, 하나의 숫자로 응축한다.
 const sumTS = reduce1([1, 2, 3], (acc, cur) => acc + cur, 0); // 6
@@ -83,6 +107,15 @@ function find2<T, Func extends (arg: T) => boolean>(
   return arr.find(func);
 }
 
+// 화살표 함수
+const find1_3 = <T>(arr: T[], func: (arg: T) => boolean): T | undefined =>
+  arr.find(func);
+
+const find2_3 = <T, Func extends (arg: T) => boolean>(
+  arr: T[],
+  func: Func
+): T | undefined => arr.find(func);
+
 // 실제 적용
 const users = [{ name: "Kim" }, { name: "Lee" }];
 const userFinded = find1(users, (user) => user.name === "Kim"); // {name: "Kim"}
@@ -102,6 +135,13 @@ function some1<T>(arr: T[], func: (arg: T) => boolean): boolean {
 function every1<T>(arr: T[], func: (arg: T) => boolean): boolean {
   return arr.every(func);
 }
+
+// 화살표 함수
+const some1_3 = <T>(arr: T[], func: (arg: T) => boolean): boolean =>
+  arr.some(func);
+
+const every1_3 = <T>(arr: T[], func: (arg: T) => boolean): boolean =>
+  arr.every(func);
 
 // 실제 적용
 const scores = [80, 90, 100];
@@ -126,6 +166,11 @@ function includes1<T>(arr: T[], value: T): boolean {
   return arr.includes(value);
 }
 
+// 화살표 함수
+const at1_3 = <T>(arr: T[], index: number): T | undefined => arr.at(index);
+
+const includes1_3 = <T>(arr: T[], value: T): boolean => arr.includes(value);
+
 // 실제 적용 예시
 const colors = ["red", "blue", "green"];
 const lastColor = at1(colors, -1); // "green"
@@ -149,6 +194,11 @@ function pop1<T>(arr: T[]): T | undefined {
   return arr.pop();
 }
 
+// 화살표 함수
+const push1_3 = <T>(arr: T[], item: T): number => arr.push(item);
+
+const pop1_3 = <T>(arr: T[]): T | undefined => arr.pop();
+
 // 실제 적용
 const stack = [1, 2];
 push1(stack, 3); // [1, 2, 3]
@@ -171,6 +221,12 @@ function reverse1<T>(arr: T[]): T[] {
 function slice1<T>(arr: T[], start: number, end: number): T[] {
   return arr.slice(start, end);
 }
+
+// 화살표 함수
+const reverse1_3 = <T>(arr: T[]): T[] => [...arr].reverse();
+
+const slice1_3 = <T>(arr: T[], start: number, end: number): T[] =>
+  arr.slice(start, end);
 
 // 실제 적용 예시
 const original1 = ["a", "b", "c", "d"];
