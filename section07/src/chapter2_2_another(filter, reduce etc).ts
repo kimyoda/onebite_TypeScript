@@ -1,5 +1,7 @@
 // 제네릭 filter 및 그 이외에 함수 추가
 
+import { it } from "node:test";
+
 // 1. filter 메서드
 const arrFilter = [1, 2, 3, 4];
 const resFilter = arrFilter.filter((number) => number > 2); // [3, 4]
@@ -18,6 +20,15 @@ function filter2<T, Func extends (arg: T) => boolean>(
 ): T[] {
   return arr.filter(func);
 }
+
+// 화살표 함수
+const filter1_3 = <T>(arr: T[], func: (arg: T) => boolean): T[] =>
+  arr.filter(func);
+
+const filter2_3 = <T, Func extends (arg: T) => boolean>(
+  arr: T[],
+  func: Func
+): T[] => arr.filter(func);
 
 // 실제 적용
 const nums = [1, 2, 3, 4];
@@ -52,6 +63,19 @@ function reduce2<T, Result, Func extends (acc: Result, cur: T) => Result>(
   return arr.reduce(func, init);
 }
 
+// 화살표 함수
+const reduce1_3 = <T, Result>(
+  arr: T[],
+  func: (acc: Result, cur: T) => Result,
+  init: Result
+): Result => arr.reduce(func, init);
+
+const reduce2_3 = <T, Result, Func extends (acc: Result, cur: T) => Result>(
+  arr: T[],
+  func: Func,
+  init: Result
+): Result => arr.reduce(func, init);
+
 // 실제 적용 예시
 // 숫자 배열을 하나로 합산, 하나의 숫자로 응축한다.
 const sumTS = reduce1([1, 2, 3], (acc, cur) => acc + cur, 0); // 6
@@ -83,6 +107,15 @@ function find2<T, Func extends (arg: T) => boolean>(
   return arr.find(func);
 }
 
+// 화살표 함수
+const find1_3 = <T>(arr: T[], func: (arg: T) => boolean): T | undefined =>
+  arr.find(func);
+
+const find2_3 = <T, Func extends (arg: T) => boolean>(
+  arr: T[],
+  func: Func
+): T | undefined => arr.find(func);
+
 // 실제 적용
 const users = [{ name: "Kim" }, { name: "Lee" }];
 const userFinded = find1(users, (user) => user.name === "Kim"); // {name: "Kim"}
@@ -102,6 +135,13 @@ function some1<T>(arr: T[], func: (arg: T) => boolean): boolean {
 function every1<T>(arr: T[], func: (arg: T) => boolean): boolean {
   return arr.every(func);
 }
+
+// 화살표 함수
+const some1_3 = <T>(arr: T[], func: (arg: T) => boolean): boolean =>
+  arr.some(func);
+
+const every1_3 = <T>(arr: T[], func: (arg: T) => boolean): boolean =>
+  arr.every(func);
 
 // 실제 적용
 const scores = [80, 90, 100];
@@ -126,7 +166,69 @@ function includes1<T>(arr: T[], value: T): boolean {
   return arr.includes(value);
 }
 
+// 화살표 함수
+const at1_3 = <T>(arr: T[], index: number): T | undefined => arr.at(index);
+
+const includes1_3 = <T>(arr: T[], value: T): boolean => arr.includes(value);
+
 // 실제 적용 예시
 const colors = ["red", "blue", "green"];
 const lastColor = at1(colors, -1); // "green"
 const hasRed = includes1(colors, "red"); // true
+
+// push & pop 요소 추가 및 제거 (원본 배열을 변경한다)
+
+// JS 사용
+const stackJS = [1, 2];
+stackJS.push(3); // [1, 2, 3]
+const poppedJS = stackJS.pop(); // 3, stackJS는 [1, 2]
+
+// TS 함수
+// push1: 새로운 요소를 추가하고 변경 후 길이를 반환
+function push1<T>(arr: T[], item: T): number {
+  return arr.push(item);
+}
+
+// pop1: 마지막 요소를 제거하고 그 값을 반환
+function pop1<T>(arr: T[]): T | undefined {
+  return arr.pop();
+}
+
+// 화살표 함수
+const push1_3 = <T>(arr: T[], item: T): number => arr.push(item);
+
+const pop1_3 = <T>(arr: T[]): T | undefined => arr.pop();
+
+// 실제 적용
+const stack = [1, 2];
+push1(stack, 3); // [1, 2, 3]
+const popped = pop1(stack); // [1, 2]
+
+// reverse & slice - 배열 반전 및 구간 복사
+
+// JS 사용
+const arrRevSlice = ["a", "b", "c", "d"];
+const reversedJS = [...arrRevSlice].reverse(); // ["d", "c", "b", "a"]
+const slicedJS = arrRevSlice.slice(1, 3); // ["b", "c"]
+
+// TS
+// reverse1: 배열의 순서를 거꾸로 뒤집는다.(원본 변경때문 스프레드 연산자 사용)
+function reverse1<T>(arr: T[]): T[] {
+  return [...arr].reverse();
+}
+
+// slice1: 배열의 특정 구간을 잘라 새 배열을 반환
+function slice1<T>(arr: T[], start: number, end: number): T[] {
+  return arr.slice(start, end);
+}
+
+// 화살표 함수
+const reverse1_3 = <T>(arr: T[]): T[] => [...arr].reverse();
+
+const slice1_3 = <T>(arr: T[], start: number, end: number): T[] =>
+  arr.slice(start, end);
+
+// 실제 적용 예시
+const original1 = ["a", "b", "c", "d"];
+const reversed = reverse1(original1); // ["d", "c", "b," "a"]
+const sliced = slice1(original1, 1, 3); // ["b", "c"]
