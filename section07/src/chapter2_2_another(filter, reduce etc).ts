@@ -130,3 +130,49 @@ function includes1<T>(arr: T[], value: T): boolean {
 const colors = ["red", "blue", "green"];
 const lastColor = at1(colors, -1); // "green"
 const hasRed = includes1(colors, "red"); // true
+
+// push & pop 요소 추가 및 제거 (원본 배열을 변경한다)
+
+// JS 사용
+const stackJS = [1, 2];
+stackJS.push(3); // [1, 2, 3]
+const poppedJS = stackJS.pop(); // 3, stackJS는 [1, 2]
+
+// TS 함수
+// push1: 새로운 요소를 추가하고 변경 후 길이를 반환
+function push1<T>(arr: T[], item: T): number {
+  return arr.push(item);
+}
+
+// pop1: 마지막 요소를 제거하고 그 값을 반환
+function pop1<T>(arr: T[]): T | undefined {
+  return arr.pop();
+}
+
+// 실제 적용
+const stack = [1, 2];
+push1(stack, 3); // [1, 2, 3]
+const popped = pop1(stack); // [1, 2]
+
+// reverse & slice - 배열 반전 및 구간 복사
+
+// JS 사용
+const arrRevSlice = ["a", "b", "c", "d"];
+const reversedJS = [...arrRevSlice].reverse(); // ["d", "c", "b", "a"]
+const slicedJS = arrRevSlice.slice(1, 3); // ["b", "c"]
+
+// TS
+// reverse1: 배열의 순서를 거꾸로 뒤집는다.(원본 변경때문 스프레드 연산자 사용)
+function reverse1<T>(arr: T[]): T[] {
+  return [...arr].reverse();
+}
+
+// slice1: 배열의 특정 구간을 잘라 새 배열을 반환
+function slice1<T>(arr: T[], start: number, end: number): T[] {
+  return arr.slice(start, end);
+}
+
+// 실제 적용 예시
+const original1 = ["a", "b", "c", "d"];
+const reversed = reverse1(original1); // ["d", "c", "b," "a"]
+const sliced = slice1(original1, 1, 3); // ["b", "c"]
