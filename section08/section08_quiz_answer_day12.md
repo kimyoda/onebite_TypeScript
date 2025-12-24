@@ -88,6 +88,8 @@ interface Product {
 }
 
 // [key in key of] : 모든 프로퍼티 이름(id, name, price, seller)를 key로 하나씩 순회한다.
+// Mapped Type은 인터페이스로는 사용할 수 없다.
+// 타입을 변형/가공해서 새 타입을 만드는 문법이라서 `type`에서 주로 사용한다.
 // ?를 통해 각 프로퍼티를 선택적으로 만들어 없어도 되는 프로퍼티로 바꾼다.
 // [key] 현재 key에 해당하는 원래 타입을 그대로 가져온다.
 type PartialProduct = {
